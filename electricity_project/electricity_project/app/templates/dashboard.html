@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - India Electricity Consumption Analytics{% endblock %}
+{% block content %}
+<h1>Interactive Dashboard</h1>
+<p class="subtitle">Filter by region and state to explore consumption trends, regional variation, and post-lockdown recovery.</p>
+
+<div class="kpi-row" id="kpiRow">
+  <div class="kpi-card"><div class="kpi-value" id="kpiTotal2020">&hellip;</div><div class="kpi-label">Total 2020 (MU)</div></div>
+  <div class="kpi-card"><div class="kpi-value" id="kpiYoy">&hellip;</div><div class="kpi-label">YoY Growth</div></div>
+  <div class="kpi-card"><div class="kpi-value" id="kpiAprDrop">&hellip;</div><div class="kpi-label">April Lockdown Drop</div></div>
+  <div class="kpi-card"><div class="kpi-value" id="kpiRecovery">&hellip;</div><div class="kpi-label">Avg Q4 Recovery</div></div>
+  <div class="kpi-card"><div class="kpi-value" id="kpiStates">&hellip;</div><div class="kpi-label">States Covered</div></div>
+</div>
+
+<div class="filters card">
+  <div>
+    <label for="regionFilter">Region</label>
+    <select id="regionFilter">
+      <option value="All">All Regions</option>
+      {% for r in regions %}<option value="{{ r.region }}">{{ r.region }}</option>{% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="stateFilter">State</label>
+    <select id="stateFilter">
+      {% for s in states %}<option value="{{ s.state }}" {% if s.state == 'Maharashtra' %}selected{% endif %}>{{ s.state }}</option>{% endfor %}
+    </select>
+  </div>
+</div>
+
+<div class="grid grid-2 section">
+  <div class="card">
+    <h2>1. National Monthly Consumption (2019 vs 2020)</h2>
+    <div class="chart-wrap"><canvas id="chartNational"></canvas></div>
+  </div>
+  <div class="card">
+    <h2>2. Year-on-Year % Change by Month</h2>
+    <div class="chart-wrap"><canvas id="chartYoy"></canvas></div>
+  </div>
+</div>
+
+<div class="grid grid-2 section">
+  <div class="card">
+    <h2>3. Regional Monthly Trend <span style="color:var(--muted); font-weight:400; font-size:.8rem;">(filtered)</span></h2>
+    <div class="chart-wrap"><canvas id="chartRegional"></canvas></div>
+  </div>
+  <div class="card">
+    <h2>4. Region Share of 2020 Consumption</h2>
+    <div class="chart-wrap"><canvas id="chartRegionShare"></canvas></div>
+  </div>
+</div>
+
+<div class="grid grid-2 section">
+  <div class="card">
+    <h2>5. Selected State: Monthly Consumption</h2>
+    <div class="chart-wrap"><canvas id="chartStateTrend"></canvas></div>
+  </div>
+  <div class="card">
+    <h2>6. Selected State: Per-Capita Consumption (kWh)</h2>
+    <div class="chart-wrap"><canvas id="chartPerCapita"></canvas></div>
+  </div>
+</div>
+
+<div class="grid grid-2 section">
+  <div class="card">
+    <h2>7. Lockdown Impact: State-wise % Change (Apr 2019 &rarr; Apr 2020)</h2>
+    <div class="chart-wrap tall"><canvas id="chartLockdown"></canvas></div>
+  </div>
+  <div class="card">
+    <h2>8. Recovery: % of Pre-COVID Baseline Reached (Q4 2020)</h2>
+    <div class="chart-wrap tall"><canvas id="chartRecovery"></canvas></div>
+  </div>
+</div>
+
+<div class="card section">
+  <h2>9. Top &amp; Bottom 5 States by Total 2020 Consumption</h2>
+  <div class="grid grid-2" style="margin-top:14px;">
+    <div>
+      <h3 style="color:var(--accent-2);">Top 5</h3>
+      <table id="topTable"><thead><tr><th>State</th><th>Region</th><th>Total 2020 (MU)</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div>
+      <h3 style="color:var(--accent-3);">Bottom 5</h3>
+      <table id="bottomTable"><thead><tr><th>State</th><th>Region</th><th>Total 2020 (MU)</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
