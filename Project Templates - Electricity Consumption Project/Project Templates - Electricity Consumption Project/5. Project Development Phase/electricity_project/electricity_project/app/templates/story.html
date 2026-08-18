@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Data Story - India Electricity Consumption Analytics{% endblock %}
+{% block content %}
+<h1>The Story of India's Electricity Demand, 2019&ndash;2020</h1>
+<p class="subtitle">Three scenes walking through the pandemic's impact on national power consumption.</p>
+
+<div class="scene">
+  <div class="scene-eyebrow">Scene 1 of 3</div>
+  <h2>Change in Overall Consumption Trends</h2>
+  <p class="scene-text">
+    Through most of 2019 and early 2020, India's electricity demand followed a familiar seasonal
+    rhythm &mdash; rising through the summer cooling season, easing in winter. Then in March 2020,
+    a nationwide lockdown was announced. By April, consumption had fallen sharply below the same
+    month a year earlier, before beginning a phased recovery as restrictions eased.
+  </p>
+  <div class="card">
+    <div class="chart-wrap tall"><canvas id="storyChart1"></canvas></div>
+  </div>
+</div>
+
+<div class="scene">
+  <div class="scene-eyebrow">Scene 2 of 3</div>
+  <h2>Regional Variations in Demand</h2>
+  <p class="scene-text">
+    The impact was not uniform. Industrially dense Western and Northern states &mdash; home to large
+    manufacturing bases &mdash; saw sharper drops when factories shut. Regions with a larger share of
+    residential and agricultural load felt a softer hit, as household consumption held up or even
+    increased during the lockdown.
+  </p>
+  <div class="card">
+    <div class="chart-wrap tall"><canvas id="storyChart2"></canvas></div>
+  </div>
+</div>
+
+<div class="scene">
+  <div class="scene-eyebrow">Scene 3 of 3</div>
+  <h2>Recovery After Lockdown</h2>
+  <p class="scene-text">
+    From June onward, as India progressively "unlocked," electricity demand began climbing back.
+    By the final quarter of 2020, several states had matched or exceeded their pre-COVID baseline
+    &mdash; a sign of economic activity resuming &mdash; while others lagged, still recovering as the year closed.
+  </p>
+  <div class="card">
+    <div class="chart-wrap tall"><canvas id="storyChart3"></canvas></div>
+  </div>
+</div>
+
+<div class="card section" style="text-align:center;">
+  <h2>Want to dig deeper?</h2>
+  <p class="subtitle">Explore every state and region interactively on the dashboard.</p>
+  <a href="{{ url_for('dashboard') }}" style="background:var(--accent); color:#1a1a1a; padding:12px 22px; border-radius:10px; font-weight:700; text-decoration:none;">Open Dashboard</a>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/story.js') }}"></script>
+{% endblock %}
